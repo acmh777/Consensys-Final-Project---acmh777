@@ -21,3 +21,6 @@ How to build and run locally:
 8) Make sure you run the local test server in a browser with metamask installed
 
 How to use:
+
+How to test:
+In your command prompt simply set your current directory to the project directory and run the command: "truffle test ./tests/ProofOfExistence.js" 
