@@ -1,10 +1,13 @@
 Tests used on the contract:
 
-1) Can the contract be successfully deployed: This simple test is basically for convention and to make sure the contract as written can always be successfully deployed - whether it is to a development chain, testnet ot mainnet. We test this in the standard way, making sure that the deployed contract instance is not undefined.
+###### 1) Can the contract be successfully deployed: 
+This simple test is basically for convention and to make sure the contract as written can always be successfully deployed - whether it is to a development chain, testnet ot mainnet. We test this in the standard way, making sure that the deployed contract instance is not undefined.
 
-2) Can new proofs be created with state variables being correctly updated: This tests the basic functionality of the contract, checking whether proofs are created correctly, and our proof counter is updated accordingly. We test this by calling the "createProof" contract with dummy inputs, and then checking that counter has updated and the "proofs" mapping object contains our new proof. 
+###### 2) Can new proofs be created with state variables being correctly updated: 
+This tests the basic functionality of the contract, checking whether proofs are created correctly, and our proof counter is updated accordingly. We test this by calling the "createProof" contract with dummy inputs, and then checking that counter has updated and the "proofs" mapping object contains our new proof. 
 
-3) Are new proofs associated with the correct address: This test is again to test the basic functionality of the contract and make sure new proofs are associated with the correct address. If this is not the case then the contract is fatally defective. We test this by checking whether a created proof is associated with the account that made it by using a getter function to get the creator address and checking the equivalency between   
+###### 3) Are new proofs associated with the correct address: 
+This test is again to test the basic functionality of the contract and make sure new proofs are associated with the correct address. If this is not the case then the contract is fatally defective. We test this by checking whether a created proof is associated with the account that made it by using a getter function to get the creator address and checking the equivalency between   
 
 4) The contract cannot be destroyed by anyone but the contract owner: We want to make sure that the contract can only be destroyed by the owner, otherwise the contract is at risk of unexpectedly being destroyed. We do this by attempting to destroy the contract with a non-owner address.
 
