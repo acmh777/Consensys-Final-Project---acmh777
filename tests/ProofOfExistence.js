@@ -1,4 +1,7 @@
-var ProofOfExistence = artifacts.require(".src/contracts/ProofOfExistence.sol");
+//pragma solidity 0.6.0;  
+//import "../contracts/ProofOfExistence.sol";
+
+var ProofOfExistence = artifacts.require("ProofOfExistence");
 
 contract('ProofOfExistence_tests', function(accounts){
 
@@ -8,12 +11,15 @@ contract('ProofOfExistence_tests', function(accounts){
         return assert.notEqual(proofContractInstance, undefined, "ProofOfExistence contract has been successfully deployed.");
     });
 
-
     it("Contract can not take larger title and description inputs than expected.", async () => {
         let proofContractInstance = await ProofOfExistence.deployed();
-        await proofContractInstance.createProof("IPFS Hash", "Title is too long...............", "Description is too long........................");
-        let proofCount = await proofContractInstance.getCurrentIndex.call();       
-        return assert.equal(proofCount, 0, "Function successfully rejected inputs for being too long");
+        //let proofCount = await proofContractInstance.getCurrentIndex.call();       
+        try { 
+            await proofContractInstance.createProof("IPFS Hash", "Title is too long...............", "Description is too long........................");
+            } catch(error) {
+                return assert.equal(await proofContractInstance.getCurrentIndex.call(), 0, "Function successfully rejected inputs for being too long");
+            }
+        return assert.equal(await proofContractInstance.getCurrentIndex.call(), 1, "Function has unsuccessfully rejected inputs for being too long");
     });
 
     it("Contract owner can activate circuit breaker.", async () => {
@@ -31,37 +37,42 @@ contract('ProofOfExistence_tests', function(accounts){
         return assert.isFalse(false, stopped, "Owner can successfully de-activate circuit breaker.");        
     });
 
-    it("New proofs cannot be created while circuit breaker active.", async () => {
+    it("New proofs cannot be created while circuit breaker is active.", async () => {
         let proofContractInstance = await ProofOfExistence.deployed();
         await proofContractInstance.stopContract();
-        await proofContractInstance.createProof("IPFS_Hash", "file_title", "file_description");
-        let proofCount = await proofContractInstance.getCurrentIndex.call();         
-        return assert.equal(proofCount, 0, "New proofs cannot be created while circuit breaker active.");        
+        try {
+            await proofContractInstance.createProof("IPFS_Hash", "file_title", "file_description");
+        } catch(error) {
+            return assert.equal(await proofContractInstance.getCurrentIndex.call(), 0, "New proofs cannot be created while circuit breaker active."); 
+        }
+        return assert.equal(await proofContractInstance.getCurrentIndex.call(), 1, "New proofs can be created while circuit breaker active.");        
     });
 
     it("Non-contract owner cannot activate circuit breaker.", async () => {
         let proofContractInstance = await ProofOfExistence.deployed();
-        await proofContractInstance.stopContract({from: accounts[3]});
-        let stopped = proofContractInstance.stopped.call();
-        return assert.isFalse(stopped, false, "Non-contract owners cannot activate circuit breaker.");                
+        try {
+            await proofContractInstance.stopContract({from: accounts[3]});
+        } catch(error) {
+            return assert.isFalse(false, await proofContractInstance.stopped.call(), "Non-contract owners cannot activate circuit breaker.");
+        }
+        return assert.isFalse(false, await proofContractInstance.stopped.call(), "Non-contract owners can activate circuit breaker.");                
     });
 
     it("Can upload new piece of proof and update total proof count", async () => {
         let proofContractInstance = await ProofOfExistence.deployed();
-        await proofContractInstance.createProof("IPFS Hash", "Title", "Description");
+        await proofContractInstance.createProof("IPFS_Hash", "Title", "Description");
         let proofCount = await proofContractInstance.getCurrentIndex.call();       
         return assert.equal(proofCount, 1, "Public proofs mapping contains 1 proof as expected.");
     });
 
     it("New proofs are associated with the correct owners", async () => {
         let proofContractInstance = await ProofOfExistence.deployed();
-        await proofContractInstance.createProof("IPFS Hash2", "Title2", "Description2");
-        let proofOwner = await ProofOfExistence.getUserAddress(1);
-        return assert.equal(proofOwner, accounts[0], "Owner of the first proof is the correct account.");
+        await proofContractInstance.createProof("IPFS_Hash", "Title", "Description", {from:accounts[0]});
+        return assert.equal(await proofContractInstance.getUserAddress(1), accounts[0], "Owner of the first proof is the correct account."); 
     });
 
 
-    it("Contract can not be destroyed by addresses other than the owner.", async () => {
+    it("Contract cannot be destroyed by addresses other than the owner.", async () => {
         let proofContractInstance = await ProofOfExistence.deployed();
         try {
             await proofContractInstance.destroy({from: accounts[1]}); // If this does not throw an error, there is a problem
@@ -74,8 +85,8 @@ contract('ProofOfExistence_tests', function(accounts){
         
     it("Contract can be successfully destroyed by the owner.", async () => {
         let proofContractInstance = await ProofOfExistence.deployed();
-        await proofContractInstance.destroy();
-        return assert.equal(web3.eth.getCode(proofContractInstance.address), "0x0", "ProofOfExistence contract has been destroyed.");
+        let addressBefore = await web3.eth.getCode(proofContractInstance.address);
+        await proofContractInstance.destroy({ from: accounts[0] });
+        return assert.notEqual(addressBefore, await web3.eth.getCode(proofContractInstance.address), "ProofOfExistence contract has been destroyed by the owner.");
     });
-
 });
