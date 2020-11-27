@@ -1,27 +1,30 @@
+// SPDX-License-Identifier: GPL-3.0
 pragma solidity 0.6.0;
 
-// Libraries
+/// Imports
 import "@openzeppelin/contracts/access/Ownable.sol"; // Using proven code from Open Zeppelin to handle contract destructibility  
 import "@openzeppelin/contracts/math/SafeMath.sol"; // Using SafeMath code from Open Zeppelin to avoid integer overflow
 
-/**
- * Proof of Existence Contract
- */
+/// @title A proof of existence contract to record data related to user uploaded files stored on IPFS
+/// @author acmh777
+/// @notice This contract 
+/// @dev All function calls are currently implemented without side effects
 
 contract ProofOfExistence is Ownable {
 
-    /// Need to declare use of SafeMath to prevent integer overflow
+    /// @notice Need to declare use of SafeMath to prevent integer overflow
     using SafeMath for uint256;
 
     /// State variables
-    address contractOwner;
-    // 
+    /// @notice An integer variable which acts as an index for our proof objects. Is iterated by 1 everytime a new proof created. 
     uint proofCount;
+    /// @notice A boolean variable for the circuit breaker.
     bool public stopped = false;
-    mapping (uint => proofObject) public proofs; // This maps an integer index to proof objects that have been created. This means we can easily store multiple proofs from the same address
+    /// @notice A mapping type of an integer to our enum "proofObject". This object will store all proofs that are created.
+    mapping (uint => proofObject) public proofs; 
     
     /// Enums and struct declarations
-    /// New struct proofObject which allows us to create an array of proof objects
+    /// @notice New struct proofObject which allows us to create an array of proof objects
     struct proofObject {
         address userAddress;
         string ipfsHash;
@@ -32,15 +35,17 @@ contract ProofOfExistence is Ownable {
     }
 
     /// Events
+    /// @notice An event for logging proof creations. The address indexed so we can use it as a search filter later on.
     event proofCreated(address indexed userAddress, string ipfsHash, string fileTitle, 
-                        string fileDescription, uint fileTimestamp, uint proofCount); // We make the address indexed so we can use it as a search filter later on
+                        string fileDescription, uint fileTimestamp, uint proofCount);
 
     /// Modifiers
+    /// @notice This modifier checks to see if the circuit breaker is off by checking if "stopped" is not true.
     modifier contractActive { require(!stopped); _; }
+    /// @notice This modifier checks to see if the circuit breaker is on by checking if "stopped" is true.
     modifier contractInactive { require(stopped); _; }
 
     /// Functions
-
     /**
      First we require the length of user descriptive inputs to be limited in length, to prevent poisoned data being sent in transactions. 
      We then iterate the proof count before we make any state changes, in order to prevent vulnerabilities such as reentrancy. 
@@ -54,38 +59,53 @@ contract ProofOfExistence is Ownable {
         emit proofCreated(msg.sender, _ipfsHash,_title, _description, _timeStamp, proofCount);
     }
 
-  /// Getter functions for viewing proof objects
+   /// @notice Getter function to retreive the IPFS hash of any proof mapped to a chosen integer index
+   /// @param proofCount
     function getIpfsHash(uint _proofIndex) public view returns (string memory x) {
         return proofs[_proofIndex].ipfsHash;
     }
 
-    function getUserAddress(uint _proofIndex) public view returns (address x) {
+   /// @notice Getter function to retreive the user address of any proof mapped to a chosen integer index
+   /// @param proofCount
+     function getUserAddress(uint _proofIndex) public view returns (address x) {
         return proofs[_proofIndex].userAddress;
     }
-
+    
+   /// @notice Getter function to retreive the title of any proof mapped to a chosen integer index
+   /// @param proofCount
     function getTitle(uint _proofIndex) public view returns (string memory x) {
         return proofs[_proofIndex].fileTitle;
     }   
 
+   /// @notice Getter function to retreive the description of any proof mapped to a chosen integer index
+   /// @param proofCount
     function getDescription(uint _proofIndex) public view returns (string memory x) {
         return proofs[_proofIndex].fileDescription;
     }
 
+   /// @notice Getter function to retreive the timestamp of any proof mapped to a chosen integer index
+   /// @param proofCount
     function getTimeStamp(uint _proofIndex) public view returns (uint x) {
         return proofs[_proofIndex].fileTimestamp;
     }
 
+   /// @notice Getter function to retreive the current proof count
     function getCurrentIndex() public view returns (uint x) {
         return proofCount;
     }
 
-  /// Owner only functions 
+    /// Owner only functions 
+    /// @notice function to destroy the contract - only callable by the owner.
     function destroy() public onlyOwner {
         selfdestruct(msg.sender);
     }  
+    
+    /// @notice stop contract function for turning on circuit breaker.
     function stopContract() public onlyOwner {
     stopped = true;
     }
+    
+    /// @notice resume contract function for turning off circuit breaker.
     function resumeContract() public onlyOwner {
         stopped = false;
     }
