@@ -1,5 +1,3 @@
-//pragma solidity 0.6.0;  
-//import "../contracts/ProofOfExistence.sol";
 
 var ProofOfExistence = artifacts.require("ProofOfExistence");
 
@@ -17,9 +15,9 @@ contract('ProofOfExistence_tests', function(accounts){
         try { 
             await proofContractInstance.createProof("IPFS Hash", "Title is too long...............", "Description is too long........................");
             } catch(error) {
-                return assert.equal(await proofContractInstance.getCurrentIndex.call(), 0, "Function successfully rejected inputs for being too long");
+                return assert.equal(await proofContractInstance.getCurrentIndex.call(), 0, "Function successfully rejected inputs for being too long.");
             }
-        return assert.equal(await proofContractInstance.getCurrentIndex.call(), 1, "Function has unsuccessfully rejected inputs for being too long");
+        return assert.equal(await proofContractInstance.getCurrentIndex.call(), 1, "Function has unsuccessfully rejected inputs for being too long.");
     });
 
     it("Contract owner can activate circuit breaker.", async () => {
@@ -60,6 +58,7 @@ contract('ProofOfExistence_tests', function(accounts){
 
     it("Can upload new piece of proof and update total proof count", async () => {
         let proofContractInstance = await ProofOfExistence.deployed();
+        await proofContractInstance.resumeContract();
         await proofContractInstance.createProof("IPFS_Hash", "Title", "Description");
         let proofCount = await proofContractInstance.getCurrentIndex.call();       
         return assert.equal(proofCount, 1, "Public proofs mapping contains 1 proof as expected.");
@@ -67,10 +66,10 @@ contract('ProofOfExistence_tests', function(accounts){
 
     it("New proofs are associated with the correct owners", async () => {
         let proofContractInstance = await ProofOfExistence.deployed();
+        await proofContractInstance.resumeContract();
         await proofContractInstance.createProof("IPFS_Hash", "Title", "Description", {from:accounts[0]});
         return assert.equal(await proofContractInstance.getUserAddress(1), accounts[0], "Owner of the first proof is the correct account."); 
     });
-
 
     it("Contract cannot be destroyed by addresses other than the owner.", async () => {
         let proofContractInstance = await ProofOfExistence.deployed();
@@ -89,4 +88,5 @@ contract('ProofOfExistence_tests', function(accounts){
         await proofContractInstance.destroy({ from: accounts[0] });
         return assert.notEqual(addressBefore, await web3.eth.getCode(proofContractInstance.address), "ProofOfExistence contract has been destroyed by the owner.");
     });
+
 });
