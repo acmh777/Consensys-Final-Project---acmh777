@@ -16,7 +16,6 @@ contract ProofOfExistence is Ownable {
     using SafeMath for uint256;
 
     /// State variables
-   
    /// @notice An integer variable which acts as an index for our proof objects. Is iterated by 1 everytime a new proof created. 
     uint proofCount;
     /// @notice A boolean variable for the circuit breaker.
@@ -40,15 +39,13 @@ contract ProofOfExistence is Ownable {
     event proofCreated(address indexed userAddress, string ipfsHash, string fileTitle, 
                         string fileDescription, uint fileTimestamp, uint proofCount);
 
-    /// Modifiers
-   
+   /// Modifiers
    /// @notice This modifier checks to see if the circuit breaker is off by checking if "stopped" is not true.
     modifier contractActive { require(!stopped); _; }
     /// @notice This modifier checks to see if the circuit breaker is on by checking if "stopped" is true.
     modifier contractInactive { require(stopped); _; }
 
     /// Functions
-   
     /// @notice Limited length user inputs are used to create a proof of existence record for a given piece of data. The record is indexed with our proofCount variable and block timestamp.
     /// @param _ipfshash is the hash that can be used to access the file on IPFS, _title and _description are recorded to describe the file. 
     /// @return No return, variables are merely stored to the proofs mapping object and an event is emitted.
@@ -96,7 +93,6 @@ contract ProofOfExistence is Ownable {
     }
 
     /// Owner only functions 
-    
     /// @notice function to destroy the contract - only callable by the owner.
     function destroy() public onlyOwner {
         selfdestruct(msg.sender);
