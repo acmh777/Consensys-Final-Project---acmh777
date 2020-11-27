@@ -30,5 +30,3 @@ When the circuit breaker is active, we want to make sure that new proofs cannot 
 ###### 10) The circuit breaker can only be altered by the owner: 
 Finally, we want to make sure that non-owners cannot tamper with the circuit breaker and interfere with the contract. We test this by attempting to alter the circuit breaker with a non-owner address and checking to see if the "stopped" variable was changed. 
 
-###### 11) Ether cannot be accidently sent to the contract: 
-This is just for good measure to make sure the fallback is working correctly, and that users cannot accidently send ETH to the contract resulting in loss of funds. If for some reason the fallback did not work and users could accidently send funds to the contract, alteration to the code would have to be made to prevent this. We test this by attempting to send ETH to the contract and then checking the balance of the contract aferwards. 
