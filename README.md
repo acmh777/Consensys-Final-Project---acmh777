@@ -2,9 +2,8 @@
 
 ## Overview of the project:
 
-This dApp simply allows users to prove the existence of any piece of data at a specific point in time by combining decentralised file storage on IPFS and record keeping on the Ethereum blockchain. A user will store files on IPFS and have the Ethereum blockchain record the IPFS file hash, file title, file description, time of storage and the address of the user who created it. Below is a visual flow of how it works: 
+This is a proof of existence dApp that simply allows users to prove the existence of a submitted piece of data at a specific point in time by combining decentralised file storage on IPFS and record keeping on the Ethereum blockchain. A user will store files on IPFS and have the Ethereum blockchain record the IPFS file hash, file title, file description, time of storage and the address of the user who created it. Below is a visual flow of how it works: 
 ![diagram](https://github.com/acmh777/Consensys-Final-Project---acmh777/blob/main/readme_images/diagram.PNG)
-
 
 ## Directory structure:
 #### migrations:
@@ -38,6 +37,3 @@ In your command prompt simply set your current directory to the project director
 After running this command you should get the following result:
 
 ![passed_tests](https://github.com/acmh777/Consensys-Final-Project---acmh777/blob/main/readme_images/passed_tests.PNG)
-
-
-## How to use:
