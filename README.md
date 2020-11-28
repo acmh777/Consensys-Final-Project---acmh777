@@ -24,7 +24,7 @@ In your command prompt simply set your current directory to the project director
 
 After running this command you should get the following result:
 
-![passed_tests](https://github.com/acmh777/Consensys-Final-Project---acmh777/blob/main/readme_images/passed_tests.PNG){ width=50% }
+![passed_tests](https://github.com/acmh777/Consensys-Final-Project---acmh777/blob/main/readme_images/passed_tests.PNG)
 
 
 ## How to use:
