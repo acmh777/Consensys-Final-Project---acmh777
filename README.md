@@ -7,11 +7,20 @@ This dApp simply allows users to prove the existence of any piece of data at a s
 
 
 ## Directory structure:
+#### migrations:
+This is standard truffle convention - our migration scripts live here.
+
+#### node_modules:
+This is where our needed modules for node.js live.
+
+#### public:
+
+
+#### src:
+There are three folders in this directory: abis, components and contracts. The first is home to the application binary interfaces of our compiled contracts (once we actually compile them), the components folder contains the files for the frontend (based on react.js), and the contracts file holds our solidity contracts.
 
 #### tests:
-
-
-
+This is where the file of contract tests "ProofOfExistence.js" is kept. 
 
 ## How to build and run locally:
 
