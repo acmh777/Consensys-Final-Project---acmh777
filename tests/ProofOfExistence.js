@@ -5,13 +5,11 @@ contract('ProofOfExistence_tests', function(accounts){
 
     it("Can be deployed.", async () => {
         let proofContractInstance = await ProofOfExistence.deployed();
-        // Can also do something like this: assert.equal(web3.eth.getCode(proofContractInstance.address), "0x0", "Proof contract has been destroyed.");
         return assert.notEqual(proofContractInstance, undefined, "ProofOfExistence contract has been successfully deployed.");
     });
 
     it("Contract can not take larger title and description inputs than expected.", async () => {
         let proofContractInstance = await ProofOfExistence.deployed();
-        //let proofCount = await proofContractInstance.getCurrentIndex.call();       
         try { 
             await proofContractInstance.createProof("IPFS Hash", "Title is too long...............", "Description is too long........................");
             } catch(error) {
