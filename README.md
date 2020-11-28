@@ -19,7 +19,7 @@ This dApp simply allows users to prove the existence of any piece of data at a s
 6) In your console execute the command: "npm run start".
 7) A local test server and development blockchain will now be running to allow you to interact with the contract (make sure you run the local test server in a browser with metamask installed).
 
-## How to use:
-
 ## How to test:
 In your command prompt simply set your current directory to the project directory and run the command: "truffle test ./tests/ProofOfExistence.js" 
+
+## How to use:
