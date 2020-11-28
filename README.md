@@ -21,5 +21,8 @@ This dApp simply allows users to prove the existence of any piece of data at a s
 
 ## How to test:
 In your command prompt simply set your current directory to the project directory and run the command: "truffle test ./tests/ProofOfExistence.js" 
+After running this command you should get the following result:
+![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
+
 
 ## How to use:
