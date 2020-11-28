@@ -95,6 +95,8 @@ class App extends Component {
       console.log("IPFS result", result)
       const fileHash = result[0].hash
       this.setState({ipfsHash: fileHash})
+      // Here we call the actual smart contract function "createProof" using our input data on our frontend
+      this.state.contract.methods.createProof(this.state.ipfsHash, this.state.fileTitle, this.state.fileDescription).send({from: this.state.account}).on('error', console.error);
       if(error){
         console.error(error)
         return
@@ -104,8 +106,6 @@ class App extends Component {
     console.log(this.state.ipfsHash)
     console.log(this.state.fileTitle)
     console.log(this.state.fileDescription)
-    // Here we call the actual smart contract function "createProof" using our input data on our frontend
-    this.state.contract.methods.createProof(this.state.ipfsHash, this.state.fileTitle, this.state.fileDescription).send({from: this.state.account}).on('error', console.error);
     var accountProofs = this.state.contract.getPastEvents("proofCreated",
     {          
         filter: {userAddress: this.state.account},                     
