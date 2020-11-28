@@ -1,4 +1,4 @@
-Tests used on the contract:
+Tests used on the contract are written in javascript using the chai assertion library. Here is a list of tests and their purpose:
 
 ###### 1) Can the contract be successfully deployed: 
 This simple test is basically for convention and to make sure the contract as written can always be successfully deployed - whether it is to a development chain, testnet or mainnet. We test this in the standard way, making sure that the deployed contract instance is not undefined.
@@ -27,6 +27,9 @@ Conversely, we want to make sure the owner can turn the circuit breaker off. We 
 ###### 9) New proofs cannot be created while the circuit breaker is active: 
 When the circuit breaker is active, we want to make sure that new proofs cannot be created and that the contract really has been stopped. We test this by activating the circuit breaker, attempting to create a new proof and then checking whether we have caught a revert error.
 
-###### 10) The circuit breaker can only be altered by the owner: 
-Finally, we want to make sure that non-owners cannot tamper with the circuit breaker and interfere with the contract. We test this by attempting to alter the circuit breaker with a non-owner address and checking to see if the "stopped" variable was changed. 
+###### 10) The circuit breaker cannot be activated by non-owners: 
+We want to make sure that non-owners cannot tamper with the contract by activating the circuit breaker. We test this by attempting to activate the circuit breaker with a non-owner address calling "stopcontract()" and checking to see if the "stopped" variable was changed.
+
+###### 11) The circuit breaker cannot be de-activated by non-owners after having been activated: 
+Likewise we want to make sure that non-owners cannot de-activate the circuit breaker if the owner does decide to activate it. We test this by first activating the circuit breaker with the owner address, and then with a non-owner address calling "resumecontract()" and making sure the error was caught.
 
