@@ -22,7 +22,7 @@ This dApp simply allows users to prove the existence of any piece of data at a s
 ## How to test:
 In your command prompt simply set your current directory to the project directory and run the command: "truffle test ./tests/ProofOfExistence.js" 
 After running this command you should get the following result:
-![passed_tests](https://github.com/acmh777/Consensys-Final-Project---acmh777/blob/main/readme_images/passed_tests.PNG)
+![passed_tests](https://github.com/acmh777/Consensys-Final-Project---acmh777/blob/main/readme_images/passed_tests.PNG = 250x)
 
 
 ## How to use:
