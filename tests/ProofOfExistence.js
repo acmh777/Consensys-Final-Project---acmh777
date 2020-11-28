@@ -53,6 +53,17 @@ contract('ProofOfExistence_tests', function(accounts){
         }
         return assert.isFalse(false, await proofContractInstance.stopped.call(), "Non-contract owners can activate circuit breaker.");                
     });
+    
+    it("Non-contract owner cannot de-activate circuit breaker when active.", async () => {
+        let proofContractInstance = await ProofOfExistence.deployed();
+        await proofContractInstance.stopContract({from: accounts[0]});
+        try {
+            await proofContractInstance.resumeContract({from: accounts[3]});
+        } catch(error) {
+            return assert.isTrue(true, await proofContractInstance.stopped.call(), "Non-contract owners cannot de-activate circuit breaker.");
+        }
+        return assert.isFalse(false, await proofContractInstance.stopped.call(), "Non-contract owners can de-activate circuit breaker.");                
+    });
 
     it("Can upload new piece of proof and update total proof count", async () => {
         let proofContractInstance = await ProofOfExistence.deployed();
