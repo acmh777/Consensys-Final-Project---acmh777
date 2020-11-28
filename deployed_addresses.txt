@@ -1,4 +1,4 @@
 Ropsten Test Network:
 
-Creation record: https://ropsten.etherscan.io/tx/0xa54f1a01c0b40b3b9dd45a2190db96bc067f8f425a0b62f455cc3edc31eff9a8
+Creation txn: https://ropsten.etherscan.io/tx/0xa54f1a01c0b40b3b9dd45a2190db96bc067f8f425a0b62f455cc3edc31eff9a8
 Contract address: 0x62afDaA17D964158511e46E9bB24919c418f7E51 
