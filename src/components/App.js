@@ -175,7 +175,7 @@ class App extends Component {
                 </p>
                 <h2>Add Proof</h2>
                 <p>
-                  Attach either a video or picture timestamp to store on IPFS:
+                  Attach a file to store on IPFS:
                 </p>
                 <form onSubmit = {this.onSubmit}>
                   <input type = 'file' onChange = {this.captureFile}/>
@@ -185,7 +185,7 @@ class App extends Component {
                   <input type="text" 
                   id={"question" + this.state.fileTitle}
                   //defaultValue={this.state.fileTitle} 
-                  placeholder="Title (20 character limit)"
+                  placeholder="Title (20 characters)"
                   onChange={this.handleTitleChange}  // to handle the change
                   value={this.state.fileTitle}/>  
                 </div>
@@ -194,7 +194,7 @@ class App extends Component {
                   <input type="text" 
                   id={"question" + this.state.fileDescription}
                   //defaultValue={this.state.fileDescription} 
-                  placeholder="Description (40 character limit)"
+                  placeholder="Description (40 characters)"
                   onChange={this.handleDescChange}  // to handle the change
                   value={this.state.fileDescription}/>  
                 </div>
