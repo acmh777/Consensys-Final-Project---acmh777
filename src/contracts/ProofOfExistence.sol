@@ -25,6 +25,7 @@ contract ProofOfExistence is Ownable {
     
     /// Enums and struct declarations
     /// @notice New struct proofObject which allows us to create an array of proof objects
+    /// @param these are 6 the different pieces of data we want to view for any proof object. 
     struct proofObject {
         address userAddress;
         string ipfsHash;
@@ -35,7 +36,7 @@ contract ProofOfExistence is Ownable {
     }
 
     /// Events
-    /// @notice An event for logging proof creations. The address indexed so we can use it as a search filter later on.
+    /// @notice An event for logging proof creations. The user address indexed so we can use it as a search filter later on.
     event proofCreated(address indexed userAddress, string ipfsHash, string fileTitle, 
                         string fileDescription, uint fileTimestamp, uint proofCount);
 
