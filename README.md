@@ -20,9 +20,11 @@ This dApp simply allows users to prove the existence of any piece of data at a s
 7) A local test server and development blockchain will now be running to allow you to interact with the contract (make sure you run the local test server in a browser with metamask installed).
 
 ## How to test:
-In your command prompt simply set your current directory to the project directory and run the command: "truffle test ./tests/ProofOfExistence.js" 
+In your command prompt simply set your current directory to the project directory and run the command: "truffle test ./tests/ProofOfExistence.js".
+
 After running this command you should get the following result:
-![passed_tests](https://github.com/acmh777/Consensys-Final-Project---acmh777/blob/main/readme_images/passed_tests.PNG =250x)
+
+![passed_tests](https://github.com/acmh777/Consensys-Final-Project---acmh777/blob/main/readme_images/passed_tests.PNG =250x){ width=50% }
 
 
 ## How to use:
