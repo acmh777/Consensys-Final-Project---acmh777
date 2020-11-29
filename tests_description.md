@@ -4,7 +4,7 @@ Tests used on the contract are written in javascript using the chai assertion li
 This simple test is basically for convention and to make sure the contract as written can always be successfully deployed - whether it is to a development chain, testnet or mainnet. We test this in the standard way, making sure that the deployed contract instance is not undefined.
 
 ###### 2) Contract can not take larger title and description inputs than expected: 
-This test is to make sure the "createProof()" function cannot take larger than expected inputs. We want to verify this to ensure that users cannot create proofs with overly long inputs. This is tested by simply trying to call the function with failing inputs and making sure our proof counter has not been iterated.
+Because very large inputs will cost a lot of gas, we want to protect users from accidently calling "createProof()" with very expensive inputs. We need to test our require statement within the "createProof()" function to make sure this is the case. This is tested by simply trying to call the function with inputs that are too large and making sure our proof counter has not been iterated.
 
 ###### 3) Can new proofs be created with state variables being correctly updated: 
 This tests the basic functionality of the contract, checking whether proofs are created correctly as well as whether our proof counter is updated accordingly. We test this by calling the "createProof" contract with dummy inputs, and then checking that the "proofCount" variable has updated and the "proofs" mapping object contains our new proof. 
